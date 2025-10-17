@@ -461,6 +461,56 @@ function IncomeStep({ register }: any) {
           />
         </div>
       </div>
+
+      {/* Savings Section */}
+      <div className="mt-8 p-4 border-2 border-chalk-green border-dashed rounded-lg">
+        <h3 className="text-2xl font-chalk text-chalk-green mb-4">
+          Monthly Savings
+        </h3>
+        <p className="text-chalk-white font-casual mb-4 text-sm">
+          How much do you typically save each month? This helps us calculate your savings rate and project your financial future.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-chalk-yellow font-chalk mb-2">
+              Monthly Savings Amount (SGD)
+            </label>
+            <input
+              type="number"
+              {...register('monthlySavings', { min: 0 })}
+              className="chalk-input w-full"
+              placeholder="1000"
+              step="100"
+            />
+            <p className="text-chalk-blue text-sm mt-1 font-casual">
+              Amount you save/invest each month
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-chalk-yellow font-chalk mb-2">
+              Or Savings Rate (%)
+            </label>
+            <input
+              type="number"
+              {...register('savingsRate', { min: 0, max: 100 })}
+              className="chalk-input w-full"
+              placeholder="20"
+              step="5"
+            />
+            <p className="text-chalk-blue text-sm mt-1 font-casual">
+              Recommended: 20-30% of income
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-4 p-3 bg-board-light rounded-lg">
+          <p className="text-chalk-white font-casual text-xs">
+            💡 <strong>Tip:</strong> Singapore average savings rate is 28%. Financial experts recommend at least 20% for a comfortable retirement.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

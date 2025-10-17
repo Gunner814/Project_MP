@@ -116,6 +116,8 @@ export interface FinancialState {
   monthlyIncome: number;
   annualBonus: number;
   salaryGrowthRate: number; // percentage per year
+  monthlySavings: number; // Amount saved per month
+  savingsRate: number; // Percentage of income saved (0-100)
   cpfBalances: {
     ordinary: number;
     special: number;
@@ -129,6 +131,16 @@ export interface FinancialState {
 
 // Theme types
 export type ThemeMode = 'dark' | 'light';
+
+// Retirement Goal
+export interface RetirementGoal {
+  targetAge: number;
+  monthlyIncomeNeeded: number;
+  riskTolerance: 'conservative' | 'moderate' | 'aggressive';
+  requiredNestEgg: number;
+  currentProjection: number;
+  gap: number;
+}
 
 export interface TimelineState {
   // User profile
@@ -165,6 +177,9 @@ export interface TimelineState {
   // Scenario/Branch Management
   scenarios: Scenario[];
   activeScenarioId: string | null;
+
+  // Retirement Goal
+  retirementGoal: RetirementGoal | null;
 
   // Theme
   theme: ThemeMode;
@@ -210,6 +225,15 @@ export interface TimelineState {
   downloadProfileJSON: (profile: CompleteProfile) => void;
   generateShareCode: (profile: CompleteProfile) => string;
   loadFromShareCode: (code: string) => Promise<CompleteProfile | null>;
+
+  // Retirement Goal Actions
+  setRetirementGoal: (goal: Omit<RetirementGoal, 'currentProjection' | 'gap'>) => void;
+  updateRetirementGoal: (updates: Partial<RetirementGoal>) => void;
+  calculateRetirementGoal: () => void;
+
+  // Savings Actions
+  updateSavings: (monthlySavings: number) => void;
+  updateSavingsRate: (savingsRate: number) => void;
 
   // Theme Actions
   setTheme: (theme: ThemeMode) => void;
@@ -378,6 +402,8 @@ const useTimelineStore = create<TimelineState>()(
         monthlyIncome: 5000,
         annualBonus: 10000,
         salaryGrowthRate: 3,
+        monthlySavings: 1000,
+        savingsRate: 20,
         cpfBalances: {
           ordinary: 50000,
           special: 30000,
@@ -983,13 +1009,21 @@ const useTimelineStore = create<TimelineState>()(
 
       projections: [],
 
+      // Retirement goal
+      retirementGoal: null,
+
       setUserProfile: (profile) => {
+        const monthlyIncome = profile.monthlyIncome?.basic || 5000;
+        const monthlySavings = profile.monthlySavings || monthlyIncome * 0.2;
+
         const financial: FinancialState = {
           currentAge: profile.age || 30,
           currentYear: new Date().getFullYear(),
-          monthlyIncome: profile.monthlyIncome?.basic || 5000,
+          monthlyIncome,
           annualBonus: (profile.monthlyIncome?.bonus || 0) * 12,
           salaryGrowthRate: 3,
+          monthlySavings,
+          savingsRate: (monthlySavings / monthlyIncome) * 100,
           cpfBalances: {
             ordinary: profile.cpfBalances?.ordinary || 50000,
             special: profile.cpfBalances?.special || 30000,
@@ -1377,6 +1411,79 @@ const useTimelineStore = create<TimelineState>()(
           console.error('Failed to load profile:', error);
           return null;
         }
+      },
+
+      // Retirement Goal Actions
+      setRetirementGoal: (goal) => {
+        const state = get();
+        const retirementProjection = state.projections.find(p => p.age === goal.targetAge);
+        const currentProjection = retirementProjection?.netWorth || 0;
+        const requiredNestEgg = goal.requiredNestEgg;
+        const gap = requiredNestEgg - currentProjection;
+
+        set({
+          retirementGoal: {
+            ...goal,
+            currentProjection,
+            gap,
+          },
+        });
+      },
+
+      updateRetirementGoal: (updates) => {
+        set((state) => ({
+          retirementGoal: state.retirementGoal
+            ? { ...state.retirementGoal, ...updates }
+            : null,
+        }));
+      },
+
+      calculateRetirementGoal: () => {
+        const state = get();
+        if (!state.retirementGoal) return;
+
+        const retirementProjection = state.projections.find(
+          p => p.age === state.retirementGoal!.targetAge
+        );
+        const currentProjection = retirementProjection?.netWorth || 0;
+        const gap = state.retirementGoal.requiredNestEgg - currentProjection;
+
+        set((state) => ({
+          retirementGoal: state.retirementGoal
+            ? {
+                ...state.retirementGoal,
+                currentProjection,
+                gap,
+              }
+            : null,
+        }));
+      },
+
+      // Savings Actions
+      updateSavings: (monthlySavings) => {
+        set((state) => {
+          const savingsRate = (monthlySavings / state.financial.monthlyIncome) * 100;
+          return {
+            financial: {
+              ...state.financial,
+              monthlySavings,
+              savingsRate,
+            },
+          };
+        });
+      },
+
+      updateSavingsRate: (savingsRate) => {
+        set((state) => {
+          const monthlySavings = (state.financial.monthlyIncome * savingsRate) / 100;
+          return {
+            financial: {
+              ...state.financial,
+              savingsRate,
+              monthlySavings,
+            },
+          };
+        });
       },
 
       // Theme Actions

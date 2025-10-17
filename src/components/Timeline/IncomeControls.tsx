@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { PiggyBank, Calculator, Briefcase } from 'lucide-react';
+import { PiggyBank, Calculator, Briefcase, TrendingUp, AlertCircle } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';
 
 export default function IncomeControls() {
@@ -8,6 +8,8 @@ export default function IncomeControls() {
     financial,
     updateSalaryGrowthRate,
     updateStartingCapital,
+    updateSavings,
+    updateSavingsRate,
     calculateProjections,
     timelineModules,
   } = useTimelineStore();
@@ -20,6 +22,11 @@ export default function IncomeControls() {
   const [investments, setInvestments] = useState(financial.investments);
   const [salaryGrowthRate, setSalaryGrowthRate] = useState(financial.salaryGrowthRate);
 
+  // Savings state
+  const [monthlySavings, setMonthlySavings] = useState(financial.monthlySavings);
+  const [savingsRate, setSavingsRate] = useState(financial.savingsRate);
+  const [savingsInputMode, setSavingsInputMode] = useState<'amount' | 'percentage'>('percentage');
+
   useEffect(() => {
     setCashSavings(financial.cashSavings);
     setCpfOA(financial.cpfBalances.ordinary);
@@ -27,6 +34,8 @@ export default function IncomeControls() {
     setCpfMA(financial.cpfBalances.medisave);
     setInvestments(financial.investments);
     setSalaryGrowthRate(financial.salaryGrowthRate);
+    setMonthlySavings(financial.monthlySavings);
+    setSavingsRate(financial.savingsRate);
   }, [financial]);
 
   const handleCapitalUpdate = () => {
@@ -45,6 +54,16 @@ export default function IncomeControls() {
     calculateProjections();
   };
 
+  const handleSavingsAmountUpdate = () => {
+    updateSavings(monthlySavings);
+    calculateProjections();
+  };
+
+  const handleSavingsRateUpdate = () => {
+    updateSavingsRate(savingsRate);
+    calculateProjections();
+  };
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-SG', {
       style: 'currency',
@@ -57,18 +76,155 @@ export default function IncomeControls() {
   const totalCPF = cpfOA + cpfSA + cpfMA;
   const totalNetWorth = cashSavings + totalCPF + investments;
 
+  // Calculate discretionary spending
+  const discretionarySpending = financial.monthlyIncome - monthlySavings;
+  const isSavingEnough = savingsRate >= 20;
+
   // Count job modules on timeline
   const jobModules = timelineModules.filter(m => m.type === 'career' || m.type === 'retirement');
   const hasStartingJob = jobModules.some(m => m.id.includes('starting-job'));
 
   return (
-    <div className="bg-bg-secondary p-4 rounded-lg border-2 border-accent-warning">
-      <h3 className="text-lg text-accent-warning mb-4 flex items-center gap-2 font-semibold">
-        <PiggyBank className="w-5 h-5" />
-        Starting Capital
-      </h3>
+    <div className="space-y-4">
+      {/* Income & Savings Section */}
+      <div className="bg-bg-secondary p-4 rounded-lg border-2 border-accent-primary">
+        <h3 className="text-lg text-accent-primary mb-4 flex items-center gap-2 font-semibold">
+          <TrendingUp className="w-5 h-5" />
+          Monthly Income & Savings
+        </h3>
 
-      <div className="space-y-4">
+        <div className="space-y-4">
+          {/* Monthly Income (Read-only Display) */}
+          <div>
+            <label className="block text-sm text-text-primary mb-2 font-semibold">
+              Monthly Income
+            </label>
+            <div className="w-full bg-bg-tertiary text-money-positive text-xl px-3 py-2 rounded border-2 border-border-secondary font-bold">
+              {formatCurrency(financial.monthlyIncome)}
+            </div>
+            <div className="text-xs text-text-muted mt-1">
+              Set via job modules on timeline
+            </div>
+          </div>
+
+          {/* Savings Input with Toggle */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="block text-sm text-text-primary font-semibold">
+                Monthly Savings
+              </label>
+              <div className="flex gap-1 text-xs">
+                <button
+                  onClick={() => setSavingsInputMode('amount')}
+                  className={`px-2 py-1 rounded transition-colors ${
+                    savingsInputMode === 'amount'
+                      ? 'bg-accent-primary text-bg-primary'
+                      : 'bg-bg-tertiary text-text-muted hover:bg-bg-hover'
+                  }`}
+                >
+                  $
+                </button>
+                <button
+                  onClick={() => setSavingsInputMode('percentage')}
+                  className={`px-2 py-1 rounded transition-colors ${
+                    savingsInputMode === 'percentage'
+                      ? 'bg-accent-primary text-bg-primary'
+                      : 'bg-bg-tertiary text-text-muted hover:bg-bg-hover'
+                  }`}
+                >
+                  %
+                </button>
+              </div>
+            </div>
+
+            {savingsInputMode === 'amount' ? (
+              <input
+                type="number"
+                value={monthlySavings}
+                onChange={(e) => setMonthlySavings(Number(e.target.value))}
+                onBlur={handleSavingsAmountUpdate}
+                className="w-full bg-bg-tertiary text-money-positive text-lg px-3 py-2 rounded border-2 border-border-primary focus:outline-none focus:border-accent-primary"
+                placeholder="1000"
+                step="100"
+              />
+            ) : (
+              <div className="flex items-center gap-3">
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  step="1"
+                  value={savingsRate}
+                  onChange={(e) => setSavingsRate(Number(e.target.value))}
+                  onMouseUp={handleSavingsRateUpdate}
+                  onTouchEnd={handleSavingsRateUpdate}
+                  className="flex-1 accent-accent-primary"
+                />
+                <div className="w-20 text-right">
+                  <input
+                    type="number"
+                    value={savingsRate}
+                    onChange={(e) => setSavingsRate(Number(e.target.value))}
+                    onBlur={handleSavingsRateUpdate}
+                    className="w-full bg-bg-tertiary text-accent-primary px-2 py-1 rounded border-2 border-border-primary text-sm focus:outline-none focus:border-accent-primary"
+                    min="0"
+                    max="100"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Savings Rate Feedback */}
+            <div className="mt-2 flex items-center gap-2">
+              {isSavingEnough ? (
+                <div className="flex items-center gap-1 text-money-positive text-sm">
+                  <span className="text-lg">✅</span>
+                  <span className="font-semibold">
+                    {savingsRate.toFixed(1)}% savings rate
+                  </span>
+                  <span className="text-text-muted">(Above 20% target)</span>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1 text-accent-warning text-sm">
+                  <AlertCircle className="w-4 h-4" />
+                  <span className="font-semibold">
+                    {savingsRate.toFixed(1)}% savings rate
+                  </span>
+                  <span className="text-text-muted">(Below 20% target)</span>
+                </div>
+              )}
+            </div>
+
+            {/* Breakdown */}
+            <div className="mt-3 p-2 bg-bg-tertiary rounded text-xs space-y-1">
+              <div className="flex justify-between text-text-secondary">
+                <span>Saving per month:</span>
+                <span className="text-money-positive font-semibold">
+                  {formatCurrency(monthlySavings)}
+                </span>
+              </div>
+              <div className="flex justify-between text-text-secondary">
+                <span>Discretionary spending:</span>
+                <span className="text-text-primary font-semibold">
+                  {formatCurrency(discretionarySpending)}
+                </span>
+              </div>
+              <div className="pt-1 border-t border-border-primary text-text-muted text-[10px]">
+                💡 Singapore average: 28% | Recommended: 20-30%
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Starting Capital Section */}
+      <div className="bg-bg-secondary p-4 rounded-lg border-2 border-accent-warning">
+        <h3 className="text-lg text-accent-warning mb-4 flex items-center gap-2 font-semibold">
+          <PiggyBank className="w-5 h-5" />
+          Starting Capital
+        </h3>
+
+        <div className="space-y-4">
         {/* Cash Savings */}
         <div>
           <label className="block text-sm text-text-primary mb-2 font-semibold">
@@ -223,6 +379,8 @@ export default function IncomeControls() {
           </div>
         </div>
       </motion.div>
+
+      </div>
 
       {/* Job Module Reminder */}
       {!hasStartingJob && (
