@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, DollarSign, Calculator, Info } from 'lucide-react';
 import { TimelineModule } from '@/stores/timelineStore';
+import useTimelineStore from '@/stores/timelineStore';
 
 interface ModuleCustomizationDialogProps {
   module: TimelineModule;
@@ -18,13 +19,15 @@ export default function ModuleCustomizationDialog({
   onClose,
   onConfirm
 }: ModuleCustomizationDialogProps) {
+  const { financial } = useTimelineStore();
   const currentYear = new Date().getFullYear();
+  const calculatedYear = currentYear + (age - financial.currentAge);
 
   // Initialize with module defaults
   const [customModule, setCustomModule] = useState<TimelineModule>({
     ...module,
     age,
-    year: currentYear + age - 30, // Assuming current age is 30, this should come from store
+    year: calculatedYear,
   });
 
   // Housing specific state
@@ -41,6 +44,30 @@ export default function ModuleCustomizationDialog({
     interestRate: 2.6, // HDB loan rate
     loanTenure: 25, // years
   });
+
+  // Reset state when module or age changes
+  useEffect(() => {
+    if (isOpen) {
+      const newYear = currentYear + (age - financial.currentAge);
+      setCustomModule({
+        ...module,
+        age,
+        year: newYear,
+      });
+      setCpfUsage(80);
+      setGrants({
+        enhanced: module.type === 'house' && module.id.includes('bto') ? 80000 : 0,
+        proximity: 0,
+        singles: 0,
+      });
+      setLoanDetails({
+        downpayment: module.costs?.oneTime || 0,
+        loanAmount: (module.costs?.oneTime || 0) * 3,
+        interestRate: 2.6,
+        loanTenure: 25,
+      });
+    }
+  }, [module, age, isOpen, currentYear, financial.currentAge]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-SG', {
@@ -113,7 +140,7 @@ export default function ModuleCustomizationDialog({
                 <div>
                   <h2 className="text-2xl font-bold text-text-primary">{module.name}</h2>
                   <p className="text-sm text-text-secondary">
-                    Customize at Age {age} (Year {currentYear + age - 30})
+                    Customize at Age {age} (Year {calculatedYear})
                   </p>
                 </div>
               </div>
