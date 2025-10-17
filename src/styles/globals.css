@@ -1,0 +1,405 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme System */
+@layer base {
+  /* Dark Theme (Default) - Softer, warmer palette */
+  :root,
+  [data-theme='dark'] {
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #252525;
+    --bg-tertiary: #2d2d2d;
+    --bg-hover: #353535;
+
+    --text-primary: #d4d4d4;
+    --text-secondary: #a8a8a8;
+    --text-muted: #858585;
+
+    --border-primary: #3e3e3e;
+    --border-secondary: #4a4a4a;
+
+    --accent-primary: #3b82f6;
+    --accent-secondary: #8b5cf6;
+    --accent-success: #22c55e;
+    --accent-warning: #f59e0b;
+    --accent-error: #ef4444;
+    --accent-info: #06b6d4;
+
+    --money-positive: #22c55e;
+    --money-negative: #ef4444;
+
+    --shadow: rgba(0, 0, 0, 0.5);
+  }
+
+  /* Light/Whiteboard Theme - Dry erase marker aesthetic */
+  [data-theme='light'] {
+    --bg-primary: #f8f8f6;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f0f0ee;
+    --bg-hover: #e8e8e6;
+
+    --text-primary: #2c2c2c;
+    --text-secondary: #4a4a4a;
+    --text-muted: #777777;
+
+    --border-primary: #d0d0ce;
+    --border-secondary: #b8b8b6;
+
+    /* Whiteboard marker colors - vibrant but smooth */
+    --accent-primary: #2563eb;   /* Blue marker */
+    --accent-secondary: #7c3aed; /* Purple marker */
+    --accent-success: #16a34a;   /* Green marker */
+    --accent-warning: #ea580c;   /* Orange marker */
+    --accent-error: #dc2626;     /* Red marker */
+    --accent-info: #0891b2;      /* Cyan marker */
+
+    --money-positive: #16a34a;   /* Green marker */
+    --money-negative: #dc2626;   /* Red marker */
+
+    --shadow: rgba(0, 0, 0, 0.08);
+  }
+
+  body {
+    @apply antialiased;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+  }
+
+  /* Whiteboard texture for light theme */
+  [data-theme='light'] body {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.01) 2px,
+        rgba(0, 0, 0, 0.01) 4px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.01) 2px,
+        rgba(0, 0, 0, 0.01) 4px
+      );
+    background-size: 100% 100%;
+  }
+
+  /* Subtle texture for dark theme */
+  [data-theme='dark'] body {
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.01) 2px,
+        rgba(255, 255, 255, 0.01) 4px
+      );
+  }
+}
+
+@layer components {
+  /* Whiteboard marker text effect */
+  [data-theme='light'] h1,
+  [data-theme='light'] h2,
+  [data-theme='light'] h3,
+  [data-theme='light'] .marker-text {
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+    letter-spacing: 0.01em;
+  }
+
+  /* Chalk text effect */
+  .chalk-text {
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3),
+                 2px 2px 4px rgba(255, 255, 255, 0.1);
+    filter: url(#chalk);
+  }
+
+  /* Chalk writing animation */
+  .chalk-write {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chalk-write::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+    animation: chalk-sweep 2s ease-out;
+  }
+
+  @keyframes chalk-sweep {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  /* Chalk board texture */
+  .board-texture {
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.02) 10px,
+        rgba(255, 255, 255, 0.02) 20px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 255, 255, 0.02) 10px,
+        rgba(255, 255, 255, 0.02) 20px
+      );
+  }
+
+  /* Eraser effect */
+  .eraser-mark {
+    background: radial-gradient(
+      ellipse at center,
+      rgba(26, 61, 46, 0.8) 0%,
+      rgba(26, 61, 46, 0.4) 50%,
+      transparent 70%
+    );
+    filter: blur(2px);
+  }
+
+  /* Chalk dust particles */
+  .chalk-dust {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: dust-fall 1s ease-out forwards;
+  }
+
+  @keyframes dust-fall {
+    0% {
+      transform: translateY(0) rotate(0deg);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translateY(30px) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* Timeline styles */
+  .timeline-line {
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--chalk-white) 10%,
+      var(--chalk-white) 90%,
+      transparent
+    );
+    height: 3px;
+    position: relative;
+  }
+
+  .timeline-line::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--chalk-white),
+      var(--chalk-white) 10px,
+      transparent 10px,
+      transparent 20px
+    );
+    opacity: 0.3;
+  }
+
+  /* Milestone markers */
+  .milestone {
+    @apply relative;
+  }
+
+  .milestone::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--chalk-white);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+
+  /* Button styles */
+  .chalk-button {
+    @apply px-6 py-3 font-chalk text-lg;
+    background: transparent;
+    border: 2px solid var(--chalk-white);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .chalk-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: left 0.3s ease;
+  }
+
+  .chalk-button:hover::before {
+    left: 0;
+  }
+
+  .chalk-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Card styles */
+  .chalk-card {
+    @apply p-6 rounded-lg;
+    background: rgba(37, 77, 58, 0.5);
+    border: 2px dashed var(--chalk-white);
+    position: relative;
+  }
+
+  .chalk-card::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(255, 255, 255, 0.05) 10px,
+      rgba(255, 255, 255, 0.05) 20px
+    );
+    z-index: -1;
+    border-radius: 12px;
+  }
+
+  /* Input styles */
+  .chalk-input {
+    @apply px-4 py-2 font-casual text-chalk-white;
+    background: rgba(26, 61, 46, 0.7);
+    border: none;
+    border-bottom: 2px solid var(--chalk-white);
+    outline: none;
+    transition: all 0.3s ease;
+  }
+
+  .chalk-input:focus {
+    background: rgba(26, 61, 46, 0.9);
+    border-bottom-color: var(--chalk-yellow);
+  }
+
+  .chalk-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+  }
+}
+
+@layer utilities {
+  /* Utility classes for chalk colors */
+  .text-chalk-white { color: var(--chalk-white); }
+  .text-chalk-yellow { color: var(--chalk-yellow); }
+  .text-chalk-pink { color: var(--chalk-pink); }
+  .text-chalk-blue { color: var(--chalk-blue); }
+  .text-chalk-green { color: var(--chalk-green); }
+  .text-chalk-red { color: var(--chalk-red); }
+
+  .bg-board { background-color: var(--board-default); }
+  .bg-board-dark { background-color: var(--board-dark); }
+  .bg-board-light { background-color: var(--board-light); }
+
+  /* Chalk hand-drawn border */
+  .border-chalk {
+    border: 2px solid var(--chalk-white);
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  }
+
+  /* Smudge effect */
+  .smudge {
+    filter: blur(0.5px) brightness(0.95);
+  }
+
+  /* Chalk stroke */
+  .chalk-stroke {
+    stroke: var(--chalk-white);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+}
+
+/* Custom scrollbar - thin and styled */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--board-dark);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) var(--board-dark);
+}
+
+/* SVG Filters */
+svg#filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Print styles */
+@media print {
+  .board-texture {
+    display: none;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+}

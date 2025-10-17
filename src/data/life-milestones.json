@@ -1,0 +1,585 @@
+{
+  "milestones": {
+    "childhood": [
+      {
+        "age": 0,
+        "title": "Born in Singapore",
+        "category": "personal",
+        "icon": "baby",
+        "description": "Welcome to the world!",
+        "financialImpact": {
+          "oneTime": 5000,
+          "monthly": 1500,
+          "notes": "Baby bonus, initial costs, monthly expenses"
+        }
+      },
+      {
+        "age": 3,
+        "title": "Start Preschool",
+        "category": "education",
+        "icon": "school",
+        "description": "Begin early childhood education",
+        "financialImpact": {
+          "monthly": 800,
+          "notes": "Preschool fees (anchor operator or private)"
+        },
+        "optional": false
+      },
+      {
+        "age": 7,
+        "title": "Primary School",
+        "category": "education",
+        "icon": "backpack",
+        "description": "Start formal education journey",
+        "financialImpact": {
+          "annual": 500,
+          "monthly": 300,
+          "notes": "School fees, books, uniforms, enrichment"
+        },
+        "duration": 6
+      }
+    ],
+    "adolescence": [
+      {
+        "age": 13,
+        "title": "Secondary School",
+        "category": "education",
+        "icon": "school",
+        "description": "Begin secondary education",
+        "financialImpact": {
+          "annual": 700,
+          "monthly": 500,
+          "notes": "School fees, materials, tuition"
+        },
+        "duration": 4,
+        "variants": ["Express", "Normal Academic", "Normal Technical"]
+      },
+      {
+        "age": 17,
+        "title": "Post-Secondary",
+        "category": "education",
+        "icon": "graduation-cap",
+        "description": "Choose JC, Polytechnic, or ITE",
+        "branches": {
+          "juniorCollege": {
+            "duration": 2,
+            "financialImpact": {
+              "annual": 1000,
+              "monthly": 800,
+              "notes": "JC fees, materials, tuition"
+            }
+          },
+          "polytechnic": {
+            "duration": 3,
+            "financialImpact": {
+              "annual": 2900,
+              "monthly": 200,
+              "notes": "Poly fees, materials"
+            }
+          },
+          "ite": {
+            "duration": 2,
+            "financialImpact": {
+              "annual": 500,
+              "monthly": 100,
+              "notes": "ITE fees, materials"
+            }
+          }
+        }
+      },
+      {
+        "age": 18,
+        "title": "National Service Enlistment",
+        "category": "personal",
+        "icon": "shield",
+        "description": "Serve the nation (males only)",
+        "gender": "male",
+        "duration": 2,
+        "financialImpact": {
+          "monthlyIncome": 650,
+          "notes": "NS allowance varies by rank"
+        }
+      }
+    ],
+    "youngAdult": [
+      {
+        "age": 21,
+        "title": "University",
+        "category": "education",
+        "icon": "university",
+        "description": "Pursue higher education",
+        "optional": true,
+        "duration": 4,
+        "financialImpact": {
+          "annual": 8200,
+          "notes": "NUS/NTU/SMU tuition for Singaporeans"
+        },
+        "variants": ["NUS", "NTU", "SMU", "SUTD", "SIT", "SUSS", "Overseas"]
+      },
+      {
+        "age": 23,
+        "title": "First Job",
+        "category": "career",
+        "icon": "briefcase",
+        "description": "Enter the workforce",
+        "financialImpact": {
+          "monthlyIncome": 3500,
+          "notes": "Median starting salary for degree holders"
+        },
+        "cpfContribution": true
+      },
+      {
+        "age": 25,
+        "title": "Start Investing",
+        "category": "financial",
+        "icon": "trending-up",
+        "description": "Begin investment journey",
+        "optional": true,
+        "financialImpact": {
+          "monthly": 500,
+          "notes": "Regular savings and investment"
+        }
+      }
+    ],
+    "adult": [
+      {
+        "age": 28,
+        "title": "Get Married",
+        "category": "family",
+        "icon": "heart",
+        "description": "Tie the knot",
+        "optional": true,
+        "financialImpact": {
+          "oneTime": 30000,
+          "notes": "Wedding costs (ROM, banquet, etc.)"
+        }
+      },
+      {
+        "age": 29,
+        "title": "Apply BTO",
+        "category": "housing",
+        "icon": "home",
+        "description": "Apply for HDB flat",
+        "optional": true,
+        "financialImpact": {
+          "oneTime": 10000,
+          "notes": "Option fee and downpayment"
+        },
+        "waitTime": 4,
+        "grants": ["EHG", "Proximity Grant"]
+      },
+      {
+        "age": 30,
+        "title": "First Child",
+        "category": "family",
+        "icon": "baby-carriage",
+        "description": "Welcome new family member",
+        "optional": true,
+        "financialImpact": {
+          "oneTime": 10000,
+          "monthly": 1500,
+          "notes": "Pregnancy, delivery, baby expenses"
+        },
+        "benefits": ["Baby Bonus", "CDA Account", "Medisave Grant"]
+      },
+      {
+        "age": 32,
+        "title": "Career Advancement",
+        "category": "career",
+        "icon": "chart-line",
+        "description": "Mid-level position",
+        "financialImpact": {
+          "monthlyIncome": 6000,
+          "notes": "Salary progression"
+        }
+      },
+      {
+        "age": 33,
+        "title": "Collect BTO Keys",
+        "category": "housing",
+        "icon": "key",
+        "description": "Move into new home",
+        "dependsOn": "Apply BTO",
+        "financialImpact": {
+          "oneTime": 40000,
+          "monthly": 1500,
+          "notes": "Renovation, furnishing, mortgage"
+        }
+      },
+      {
+        "age": 35,
+        "title": "Buy Car",
+        "category": "lifestyle",
+        "icon": "car",
+        "description": "Purchase vehicle",
+        "optional": true,
+        "modular": true,
+        "financialImpact": {
+          "oneTime": 120000,
+          "monthly": 2000,
+          "notes": "COE, car price, insurance, maintenance"
+        }
+      },
+      {
+        "age": 35,
+        "title": "Second Child",
+        "category": "family",
+        "icon": "users",
+        "description": "Expand the family",
+        "optional": true,
+        "financialImpact": {
+          "oneTime": 8000,
+          "monthly": 1200,
+          "notes": "Additional child expenses"
+        }
+      }
+    ],
+    "midLife": [
+      {
+        "age": 40,
+        "title": "Senior Position",
+        "category": "career",
+        "icon": "star",
+        "description": "Management role",
+        "financialImpact": {
+          "monthlyIncome": 10000,
+          "notes": "Senior management salary"
+        }
+      },
+      {
+        "age": 42,
+        "title": "Investment Property",
+        "category": "investment",
+        "icon": "building",
+        "description": "Buy second property",
+        "optional": true,
+        "modular": true,
+        "financialImpact": {
+          "oneTime": 300000,
+          "monthlyIncome": 2000,
+          "monthlyExpense": 3000,
+          "notes": "Rental income vs mortgage"
+        },
+        "taxes": ["ABSD"]
+      },
+      {
+        "age": 45,
+        "title": "Children's Secondary School",
+        "category": "family",
+        "icon": "school",
+        "description": "Kids enter secondary education",
+        "dependsOn": "First Child",
+        "financialImpact": {
+          "monthly": 1000,
+          "notes": "Tuition, enrichment classes"
+        }
+      },
+      {
+        "age": 50,
+        "title": "Peak Earning Years",
+        "category": "career",
+        "icon": "crown",
+        "description": "Career peak",
+        "financialImpact": {
+          "monthlyIncome": 15000,
+          "notes": "Peak career earnings"
+        }
+      },
+      {
+        "age": 50,
+        "title": "Parents' Care",
+        "category": "family",
+        "icon": "heart-handshake",
+        "description": "Support aging parents",
+        "optional": true,
+        "modular": true,
+        "financialImpact": {
+          "monthly": 1500,
+          "notes": "Parents' medical, living expenses"
+        }
+      },
+      {
+        "age": 52,
+        "title": "Children's University",
+        "category": "family",
+        "icon": "graduation-cap",
+        "description": "Kids enter university",
+        "dependsOn": "First Child",
+        "financialImpact": {
+          "annual": 10000,
+          "notes": "University tuition support"
+        },
+        "duration": 4
+      }
+    ],
+    "preRetirement": [
+      {
+        "age": 55,
+        "title": "CPF Withdrawal Eligibility",
+        "category": "financial",
+        "icon": "piggy-bank",
+        "description": "Can withdraw CPF savings",
+        "financialImpact": {
+          "notes": "Access to CPF OA and SA above BRS"
+        },
+        "decisions": ["Withdraw", "Leave for interest", "Top-up for tax relief"]
+      },
+      {
+        "age": 55,
+        "title": "SRS Top-up",
+        "category": "financial",
+        "icon": "wallet",
+        "description": "Maximize SRS contributions",
+        "optional": true,
+        "financialImpact": {
+          "annual": 15300,
+          "notes": "SRS contribution for tax relief"
+        }
+      },
+      {
+        "age": 58,
+        "title": "Downsize Home",
+        "category": "housing",
+        "icon": "home",
+        "description": "Move to smaller property",
+        "optional": true,
+        "financialImpact": {
+          "oneTime": -200000,
+          "notes": "Cash out from property downsize"
+        }
+      },
+      {
+        "age": 60,
+        "title": "Semi-Retirement",
+        "category": "career",
+        "icon": "coffee",
+        "description": "Reduce work hours",
+        "optional": true,
+        "financialImpact": {
+          "monthlyIncome": 5000,
+          "notes": "Part-time or consulting income"
+        }
+      }
+    ],
+    "retirement": [
+      {
+        "age": 63,
+        "title": "Retirement",
+        "category": "career",
+        "icon": "umbrella-beach",
+        "description": "Official retirement age",
+        "financialImpact": {
+          "monthlyIncome": 0,
+          "notes": "No more employment income"
+        }
+      },
+      {
+        "age": 65,
+        "title": "CPF LIFE Payout",
+        "category": "financial",
+        "icon": "coins",
+        "description": "Start receiving CPF LIFE",
+        "financialImpact": {
+          "monthlyIncome": 1500,
+          "notes": "CPF LIFE monthly payout"
+        },
+        "variants": ["Basic", "Standard", "Escalating"]
+      },
+      {
+        "age": 68,
+        "title": "Full Retirement",
+        "category": "personal",
+        "icon": "sunrise",
+        "description": "Complete retirement",
+        "financialImpact": {
+          "monthly": -3000,
+          "notes": "Living expenses in retirement"
+        }
+      },
+      {
+        "age": 70,
+        "title": "Estate Planning",
+        "category": "financial",
+        "icon": "scroll",
+        "description": "Finalize estate matters",
+        "optional": true,
+        "financialImpact": {
+          "oneTime": 5000,
+          "notes": "Will, trust, LPA setup"
+        }
+      }
+    ]
+  },
+  "modularAddOns": {
+    "transportation": {
+      "car": {
+        "name": "Car Ownership",
+        "availableFrom": 18,
+        "duration": 10,
+        "renewable": true,
+        "costs": {
+          "coe": { "A": 90000, "B": 105000 },
+          "vehicle": [80000, 150000],
+          "monthly": [1500, 2500]
+        }
+      },
+      "motorcycle": {
+        "name": "Motorcycle",
+        "availableFrom": 18,
+        "costs": {
+          "coe": 10000,
+          "vehicle": [8000, 20000],
+          "monthly": [300, 500]
+        }
+      }
+    },
+    "lifestyle": {
+      "countryClub": {
+        "name": "Country Club Membership",
+        "availableFrom": 21,
+        "costs": {
+          "entrance": [30000, 200000],
+          "monthly": [300, 1000]
+        }
+      },
+      "maid": {
+        "name": "Domestic Helper",
+        "availableFrom": 21,
+        "requirements": ["married", "children", "elderly_parents"],
+        "costs": {
+          "oneTime": 3000,
+          "monthly": [1200, 1800]
+        }
+      }
+    },
+    "investment": {
+      "stocks": {
+        "name": "Stock Investment",
+        "availableFrom": 18,
+        "minInvestment": 1000,
+        "expectedReturn": [0.05, 0.12]
+      },
+      "property": {
+        "name": "Investment Property",
+        "availableFrom": 35,
+        "requirements": ["existing_hdb"],
+        "costs": {
+          "downpayment": [200000, 500000],
+          "absd": 0.2
+        }
+      }
+    },
+    "family": {
+      "additionalChild": {
+        "name": "Additional Children",
+        "costs": {
+          "oneTime": 8000,
+          "monthly": 1200,
+          "duration": 22
+        }
+      },
+      "elderCare": {
+        "name": "Elder Care",
+        "variants": {
+          "home": { "monthly": [500, 1000] },
+          "daycare": { "monthly": [900, 1500] },
+          "nursingHome": { "monthly": [1800, 3500] }
+        }
+      }
+    },
+    "education": {
+      "privateTuition": {
+        "name": "Private Tuition",
+        "perChild": true,
+        "costs": {
+          "primary": { "monthly": [200, 800] },
+          "secondary": { "monthly": [300, 1200] },
+          "jc": { "monthly": [400, 1500] }
+        }
+      },
+      "enrichment": {
+        "name": "Enrichment Classes",
+        "perChild": true,
+        "types": ["music", "sports", "arts", "coding"],
+        "costs": { "monthly": [200, 1000] }
+      },
+      "overseasEducation": {
+        "name": "Overseas Education",
+        "costs": {
+          "annual": [50000, 100000],
+          "duration": 4
+        }
+      }
+    },
+    "business": {
+      "startup": {
+        "name": "Start Business",
+        "availableFrom": 21,
+        "costs": {
+          "initial": [10000, 100000],
+          "monthly": [-5000, 10000]
+        },
+        "riskLevel": "high"
+      },
+      "franchise": {
+        "name": "Franchise Business",
+        "costs": {
+          "initial": [50000, 500000],
+          "royalty": 0.05
+        },
+        "riskLevel": "medium"
+      }
+    },
+    "insurance": {
+      "wholeLife": {
+        "name": "Whole Life Insurance",
+        "coverage": [100000, 1000000],
+        "premium": { "monthly": [200, 2000] }
+      },
+      "investment": {
+        "name": "Investment-Linked Policy",
+        "premium": { "monthly": [300, 3000] },
+        "expectedReturn": [0.03, 0.08]
+      },
+      "critical": {
+        "name": "Critical Illness",
+        "coverage": [50000, 500000],
+        "premium": { "monthly": [100, 800] }
+      }
+    }
+  },
+  "defaultProfiles": {
+    "conservative": {
+      "name": "Conservative Planner",
+      "description": "Focus on stability and security",
+      "savingsRate": 0.4,
+      "investmentRisk": "low",
+      "propertyStrategy": "hdb_only",
+      "retirementAge": 65
+    },
+    "balanced": {
+      "name": "Balanced Approach",
+      "description": "Mix of growth and stability",
+      "savingsRate": 0.3,
+      "investmentRisk": "medium",
+      "propertyStrategy": "upgrade_once",
+      "retirementAge": 63
+    },
+    "aggressive": {
+      "name": "Aggressive Growth",
+      "description": "Maximize wealth accumulation",
+      "savingsRate": 0.5,
+      "investmentRisk": "high",
+      "propertyStrategy": "multiple_properties",
+      "retirementAge": 55
+    },
+    "fire": {
+      "name": "FIRE Movement",
+      "description": "Financial Independence, Retire Early",
+      "savingsRate": 0.7,
+      "investmentRisk": "medium_high",
+      "propertyStrategy": "investment_focus",
+      "retirementAge": 45
+    }
+  }
+}

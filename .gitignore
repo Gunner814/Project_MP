@@ -191,6 +191,10 @@ credentials.json
 /uploads
 /downloads
 
+# Personal notes and prompts
+prompt.txt
+nul
+
 # Storybook
 storybook-static/
 
