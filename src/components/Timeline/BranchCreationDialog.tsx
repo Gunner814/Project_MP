@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, GitBranch, Palette, FileText, Calendar } from 'lucide-react';
 import { SCENARIO_COLORS, ScenarioColor } from '@/stores/timelineStore';
