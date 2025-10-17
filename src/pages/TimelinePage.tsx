@@ -4,6 +4,7 @@ import { Calendar, Settings, Save, RefreshCw, Share2, Upload } from 'lucide-reac
 import ModuleLibrary from '@/components/Timeline/ModuleLibrary';
 import InteractiveTimeline from '@/components/Timeline/InteractiveTimeline';
 import IncomeControls from '@/components/Timeline/IncomeControls';
+import RetirementGoal from '@/components/Timeline/RetirementGoal';
 import FinancialProjectionGraph from '@/components/Timeline/FinancialProjectionGraph';
 import ScenarioManager from '@/components/Timeline/ScenarioManager';
 import BranchCreationDialog from '@/components/Timeline/BranchCreationDialog';
@@ -218,6 +219,11 @@ export default function TimelinePage() {
               {/* Income Controls */}
               <div className="shadow-xl">
                 <IncomeControls />
+              </div>
+
+              {/* Retirement Goal */}
+              <div className="shadow-xl">
+                <RetirementGoal />
               </div>
 
               {/* Financial Projections */}

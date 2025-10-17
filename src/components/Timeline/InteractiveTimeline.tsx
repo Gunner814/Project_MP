@@ -85,6 +85,41 @@ export default function InteractiveTimeline() {
     return projections.find(p => p.age === age);
   };
 
+  // Detect warnings for each age
+  const getWarningForAge = (age: number) => {
+    const projection = getProjectionForAge(age);
+    if (!projection || age <= financial.currentAge) return null;
+
+    // Check for cash depletion (high severity)
+    if (projection.cashSavings < 0) {
+      return {
+        severity: 'high' as const,
+        message: 'Cash Depleted',
+        icon: '🚨',
+      };
+    }
+
+    // Check for low cash reserves (medium severity)
+    if (projection.cashSavings < financial.monthlyIncome * 3) {
+      return {
+        severity: 'medium' as const,
+        message: 'Low Cash',
+        icon: '⚠️',
+      };
+    }
+
+    // Check for high expense years (medium severity)
+    if (projection.annualExpenses > financial.monthlyIncome * 24) {
+      return {
+        severity: 'medium' as const,
+        message: 'High Expenses',
+        icon: '💸',
+      };
+    }
+
+    return null;
+  };
+
   const scenarioColor = activeScenario?.color.color || '#fff';
 
   return (
@@ -269,6 +304,27 @@ export default function InteractiveTimeline() {
                     🏦 CPF Life Starts
                   </div>
                 )}
+
+                {/* Warning Badges */}
+                {(() => {
+                  const warning = getWarningForAge(age);
+                  if (!warning) return null;
+
+                  return (
+                    <motion.div
+                      initial={{ scale: 0, x: 100 }}
+                      animate={{ scale: 1, x: 0 }}
+                      className={`absolute right-0 top-0 px-2 py-1 rounded text-xs font-bold shadow-lg z-10 border-2 ${
+                        warning.severity === 'high'
+                          ? 'bg-accent-error border-accent-error text-white'
+                          : 'bg-accent-warning border-accent-warning text-black'
+                      }`}
+                      title={warning.message}
+                    >
+                      {warning.icon} {warning.message}
+                    </motion.div>
+                  );
+                })()}
               </motion.div>
             );
           })}
