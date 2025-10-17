@@ -169,6 +169,7 @@ export interface TimelineState {
     cpfSA: number;
     cpfMA: number;
     cashSavings: number;
+    investments: number;
     monthlyIncome: number;
     annualExpenses: number;
     grantsReceived: number;
@@ -252,6 +253,7 @@ const calculateProjections = (
   let cpfSA = financial.cpfBalances.special;
   let cpfMA = financial.cpfBalances.medisave;
   let cashSavings = financial.cashSavings || 0;
+  let investments = financial.investments || 0;
 
   // Track additional income streams (side hustles, etc)
   let additionalMonthlyIncome = 0;
@@ -363,24 +365,50 @@ const calculateProjections = (
     cpfSA *= 1.04; // 4% interest (up to first $60k)
     cpfMA *= 1.04; // 4% interest
 
-    // Calculate cash flow
+    // Calculate cash flow with ACTUAL savings rate
     const takehomePay = annualIncome * (1 - cpfRate);
-    const cashFlow = takehomePay - annualExpenses - oneTimeCosts + grantsReceived;
+
+    // Calculate planned annual savings based on user's savings rate/amount
+    const plannedAnnualSavings = financial.monthlySavings * 12;
+
+    // Discretionary spending (consumed, not saved) = income - module expenses - planned savings
+    // We don't add this to net worth because it's spent on daily life (food, entertainment, etc.)
+    const discretionarySpending = takehomePay - annualExpenses - plannedAnnualSavings;
+
+    // If discretionary is negative, user is overspending - reduce savings
+    const actualSavings = discretionarySpending < 0
+      ? Math.max(0, plannedAnnualSavings + discretionarySpending) // Reduce savings by overspend
+      : plannedAnnualSavings; // Normal case: save as planned
+
+    // Cash flow = actual savings - one-time costs + grants
+    const cashFlow = actualSavings - oneTimeCosts + grantsReceived;
     cashSavings += cashFlow;
 
+    // Apply investment returns (5% annual return)
+    // Assumes 60% of savings goes to investments for growth, 40% stays as cash
+    if (age > startAge && actualSavings > 0) {
+      const savingsToInvest = actualSavings * 0.6;
+      investments += savingsToInvest;
+      investments *= 1.05; // 5% annual return
+    } else if (age > startAge) {
+      // Still apply returns to existing investments even if not saving
+      investments *= 1.05;
+    }
+
     // Calculate total net worth
-    const totalNetWorth = cashSavings + cpfOA + cpfSA + cpfMA + (financial.investments || 0);
+    const totalNetWorth = cashSavings + cpfOA + cpfSA + cpfMA + investments;
 
     projections.push({
       year,
       age,
       netWorth: Math.round(totalNetWorth),
-      cashFlow: Math.round(cashFlow / 12), // Monthly cash flow
+      cashFlow: Math.round(cashFlow / 12), // Monthly cash flow (savings rate per month)
       cpfTotal: Math.round(cpfOA + cpfSA + cpfMA),
       cpfOA: Math.round(cpfOA),
       cpfSA: Math.round(cpfSA),
       cpfMA: Math.round(cpfMA),
       cashSavings: Math.round(cashSavings),
+      investments: Math.round(investments),
       monthlyIncome: Math.round(monthlyIncome),
       annualExpenses: Math.round(annualExpenses),
       grantsReceived: Math.round(grantsReceived)
