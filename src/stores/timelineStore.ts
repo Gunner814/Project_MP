@@ -153,6 +153,13 @@ export interface TimelineState {
     netWorth: number;
     cashFlow: number;
     cpfTotal: number;
+    cpfOA: number;
+    cpfSA: number;
+    cpfMA: number;
+    cashSavings: number;
+    monthlyIncome: number;
+    annualExpenses: number;
+    grantsReceived: number;
   }[];
 
   // Scenario/Branch Management

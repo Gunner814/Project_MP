@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ChevronRight, ChevronLeft, Save, Calculator, Home, Car, Briefcase, Heart, DollarSign } from 'lucide-react';
-import { UserProfile } from '@/types/user-profile';
 
 interface WizardStep {
   id: string;
@@ -376,7 +375,7 @@ function PersonalInfoStep({ register, errors, watch }: any) {
   );
 }
 
-function IncomeStep({ register, errors }: any) {
+function IncomeStep({ register }: any) {
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-chalk text-chalk-green mb-4">
@@ -564,7 +563,7 @@ function CPFStep({ register, errors }: any) {
   );
 }
 
-function AssetsStep({ register, errors }: any) {
+function AssetsStep({ register }: any) {
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-chalk text-chalk-green mb-4">
@@ -718,7 +717,7 @@ function AssetsStep({ register, errors }: any) {
   );
 }
 
-function PropertyStep({ register, errors }: any) {
+function PropertyStep({ register }: any) {
   const [hasProperty, setHasProperty] = useState(false);
 
   return (
@@ -829,7 +828,7 @@ function PropertyStep({ register, errors }: any) {
   );
 }
 
-function VehiclesStep({ register, errors }: any) {
+function VehiclesStep({ register }: any) {
   const [hasVehicle, setHasVehicle] = useState(false);
 
   return (
@@ -939,7 +938,7 @@ function VehiclesStep({ register, errors }: any) {
   );
 }
 
-function LiabilitiesStep({ register, errors }: any) {
+function LiabilitiesStep({ register }: any) {
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-chalk text-chalk-green mb-4">
@@ -1016,7 +1015,7 @@ function LiabilitiesStep({ register, errors }: any) {
   );
 }
 
-function ExpensesStep({ register, errors }: any) {
+function ExpensesStep({ register }: any) {
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-chalk text-chalk-green mb-4">
