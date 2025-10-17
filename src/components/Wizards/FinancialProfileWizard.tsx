@@ -150,7 +150,7 @@ export default function FinancialProfileWizard() {
       case 'personal':
         return <PersonalInfoStep register={register} errors={errors} watch={watch} />;
       case 'income':
-        return <IncomeStep register={register} errors={errors} />;
+        return <IncomeStep register={register} errors={errors} watch={watch} />;
       case 'cpf':
         return <CPFStep register={register} errors={errors} />;
       case 'assets':
@@ -162,7 +162,7 @@ export default function FinancialProfileWizard() {
       case 'liabilities':
         return <LiabilitiesStep register={register} errors={errors} />;
       case 'expenses':
-        return <ExpensesStep register={register} errors={errors} />;
+        return <ExpensesStep register={register} errors={errors} watch={watch} />;
       default:
         return null;
     }
@@ -384,7 +384,7 @@ function PersonalInfoStep({ register, errors, watch }: any) {
   );
 }
 
-function IncomeStep({ register }: any) {
+function IncomeStep({ register, watch }: any) {
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-chalk text-chalk-green mb-4">
@@ -1083,7 +1083,7 @@ function LiabilitiesStep({ register }: any) {
   );
 }
 
-function ExpensesStep({ register }: any) {
+function ExpensesStep({ register, watch }: any) {
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-chalk text-chalk-green mb-4">
