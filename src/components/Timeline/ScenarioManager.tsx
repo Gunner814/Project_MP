@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GitBranch, Plus, Trash2, Edit3, Copy, BarChart3, ChevronDown } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';

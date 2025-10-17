@@ -1,8 +1,7 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, TrendingUp, TrendingDown, DollarSign, PiggyBank } from 'lucide-react';
+import { X, TrendingUp, DollarSign, PiggyBank } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';
-import { Scenario } from '@/stores/timelineStore';
 
 interface ScenarioComparisonViewProps {
   isOpen: boolean;
@@ -10,7 +9,7 @@ interface ScenarioComparisonViewProps {
 }
 
 export default function ScenarioComparisonView({ isOpen, onClose }: ScenarioComparisonViewProps) {
-  const { scenarios, financial } = useTimelineStore();
+  const { scenarios } = useTimelineStore();
 
   // Calculate projections for each scenario
   const scenarioProjections = useMemo(() => {

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { X, DollarSign, Calendar, TrendingUp, TrendingDown } from 'lucide-react';
+import { X, Calendar, TrendingUp, TrendingDown } from 'lucide-react';
 import { TimelineModule } from '@/stores/timelineStore';
 
 interface DraggableModuleProps {

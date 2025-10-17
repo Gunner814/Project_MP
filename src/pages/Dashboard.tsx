@@ -1,11 +1,9 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Calculator,
   Home,
   Car,
   TrendingUp,
-  Users,
   Heart,
   DollarSign,
   Clock,

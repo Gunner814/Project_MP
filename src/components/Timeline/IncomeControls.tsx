@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { PiggyBank, Calculator, TrendingUp, Briefcase } from 'lucide-react';
+import { PiggyBank, Calculator, Briefcase } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';
 
 export default function IncomeControls() {
   const {
     financial,
-    updateIncome,
     updateSalaryGrowthRate,
     updateStartingCapital,
     calculateProjections,

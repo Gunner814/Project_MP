@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, DollarSign, Calculator, Info, Percent, Calendar } from 'lucide-react';
+import { X, DollarSign, Calculator, Info } from 'lucide-react';
 import { TimelineModule } from '@/stores/timelineStore';
 
 interface ModuleCustomizationDialogProps {

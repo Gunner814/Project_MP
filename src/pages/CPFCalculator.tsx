@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Calculator, Info, TrendingUp, PiggyBank } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Info, TrendingUp, PiggyBank } from 'lucide-react';
 import { calculateCPFContribution } from '@constants/singapore';
 
 export default function CPFCalculator() {

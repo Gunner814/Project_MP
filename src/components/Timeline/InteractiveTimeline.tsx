@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Trash2, TrendingUp, TrendingDown, DollarSign, PiggyBank } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';
 import DraggableModule from './DraggableModule';
 import ModuleCustomizationDialog from './ModuleCustomizationDialog';
@@ -13,7 +12,6 @@ export default function InteractiveTimeline() {
     projections,
     addModule,
     removeModule,
-    moveModule,
     calculateProjections,
     getActiveScenario,
   } = useTimelineStore();
@@ -126,7 +124,7 @@ export default function InteractiveTimeline() {
       <div className="p-4">
         {/* Decade Markers */}
         <div className="grid grid-cols-11 gap-2 mb-6">
-          {['20s', '30s', '40s', '50s', '60s', '70s', '80s', '90s', '100s', '110s', '120s'].map((decade, i) => (
+          {['20s', '30s', '40s', '50s', '60s', '70s', '80s', '90s', '100s', '110s', '120s'].map((decade) => (
             <div
               key={decade}
               className="text-center font-semibold text-accent-primary border-b-2 border-accent-primary pb-1 text-sm"

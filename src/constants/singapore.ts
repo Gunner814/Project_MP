@@ -602,7 +602,7 @@ export function calculateCPFContribution(
   };
 }
 
-export function getAgeGroup(age: number): string {
+export function getAgeGroup(age: number): keyof typeof CPF_CONTRIBUTION_RATES.employee {
   if (age <= 35) return '<=35';
   if (age <= 45) return '36-45';
   if (age <= 50) return '46-50';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Package, Info, Plus, Sparkles } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';
@@ -6,7 +6,7 @@ import DraggableModule from './DraggableModule';
 import CustomModuleCreator from './CustomModuleCreator';
 
 export default function ModuleLibrary() {
-  const { availableModules, customModules, addModule } = useTimelineStore();
+  const { availableModules, customModules } = useTimelineStore();
   const [activeTab, setActiveTab] = useState<string>('housing');
   const [isCreatorOpen, setIsCreatorOpen] = useState(false);
 

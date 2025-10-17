@@ -216,7 +216,6 @@ const calculateProjections = (
 ): any[] => {
   const projections = [];
   const endAge = 123;
-  let netWorth = financial.netWorth || 0;
   let monthlyIncome = financial.monthlyIncome;
   let cpfOA = financial.cpfBalances.ordinary;
   let cpfSA = financial.cpfBalances.special;
