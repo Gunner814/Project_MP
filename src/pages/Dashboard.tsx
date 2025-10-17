@@ -39,9 +39,12 @@ export default function Dashboard() {
   const retirementStatus = getRetirementStatus();
 
   // Calculate financial health
-  const savingsRate = financial.savingsRate || 0;
+  const savingsRate = financial?.savingsRate || 0;
   const isSavingEnough = savingsRate >= 20;
-  const emergencyFundMonths = financial.cashSavings / (financial.monthlyIncome - financial.monthlySavings);
+  const discretionarySpending = (financial?.monthlyIncome || 0) - (financial?.monthlySavings || 0);
+  const emergencyFundMonths = discretionarySpending > 0
+    ? (financial?.cashSavings || 0) / discretionarySpending
+    : 0;
   const hasEmergencyFund = emergencyFundMonths >= 6;
 
   // Detect timeline warnings

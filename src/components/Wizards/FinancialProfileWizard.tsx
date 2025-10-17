@@ -344,13 +344,22 @@ function PersonalInfoStep({ register, errors, watch }: any) {
           <label className="block text-chalk-yellow font-chalk mb-2">
             Number of Children
           </label>
-          <input
-            type="number"
-            {...register('numberOfChildren', { min: 0 })}
-            className="chalk-input w-full"
-            placeholder="0"
-            defaultValue="0"
-          />
+          <div className="flex items-center gap-4">
+            <input
+              type="range"
+              min="0"
+              max="10"
+              step="1"
+              defaultValue="0"
+              {...register('numberOfChildren')}
+              className="flex-1 h-3 bg-board-light rounded-lg appearance-none cursor-pointer accent-chalk-blue"
+            />
+            <div className="w-16 text-right">
+              <span className="text-2xl font-chalk text-chalk-yellow">
+                {watch('numberOfChildren') || 0}
+              </span>
+            </div>
+          </div>
         </div>
 
         {gender === 'male' && (
@@ -492,13 +501,22 @@ function IncomeStep({ register }: any) {
             <label className="block text-chalk-yellow font-chalk mb-2">
               Or Savings Rate (%)
             </label>
-            <input
-              type="number"
-              {...register('savingsRate', { min: 0, max: 100 })}
-              className="chalk-input w-full"
-              placeholder="20"
-              step="5"
-            />
+            <div className="flex items-center gap-4">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="5"
+                defaultValue="20"
+                {...register('savingsRate')}
+                className="flex-1 h-3 bg-board-light rounded-lg appearance-none cursor-pointer accent-chalk-green"
+              />
+              <div className="w-20 text-right">
+                <span className="text-2xl font-chalk text-chalk-yellow">
+                  {watch('savingsRate') || 20}%
+                </span>
+              </div>
+            </div>
             <p className="text-chalk-blue text-sm mt-1 font-casual">
               Recommended: 20-30% of income
             </p>
@@ -1081,26 +1099,50 @@ function ExpensesStep({ register }: any) {
               <label className="block text-chalk-white font-casual mb-2">
                 Food & Groceries
               </label>
-              <input
-                type="number"
-                {...register('expenses.food', { min: 0 })}
-                className="chalk-input w-full"
-                placeholder="0"
-                step="50"
-              />
+              <div className="flex items-center gap-3">
+                <input
+                  type="range"
+                  min="0"
+                  max="2000"
+                  step="50"
+                  defaultValue="500"
+                  {...register('expenses.food')}
+                  className="flex-1 h-3 bg-board-light rounded-lg appearance-none cursor-pointer accent-chalk-green"
+                />
+                <div className="w-24 text-right">
+                  <span className="text-xl font-chalk text-chalk-yellow">
+                    ${watch('expenses.food') || 500}
+                  </span>
+                </div>
+              </div>
+              <p className="text-chalk-blue text-xs mt-1 font-casual">
+                Typical: $300-$800/month
+              </p>
             </div>
 
             <div>
               <label className="block text-chalk-white font-casual mb-2">
                 Transport
               </label>
-              <input
-                type="number"
-                {...register('expenses.transport', { min: 0 })}
-                className="chalk-input w-full"
-                placeholder="0"
-                step="50"
-              />
+              <div className="flex items-center gap-3">
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="25"
+                  defaultValue="200"
+                  {...register('expenses.transport')}
+                  className="flex-1 h-3 bg-board-light rounded-lg appearance-none cursor-pointer accent-chalk-green"
+                />
+                <div className="w-24 text-right">
+                  <span className="text-xl font-chalk text-chalk-yellow">
+                    ${watch('expenses.transport') || 200}
+                  </span>
+                </div>
+              </div>
+              <p className="text-chalk-blue text-xs mt-1 font-casual">
+                Typical: $100-$300/month
+              </p>
             </div>
 
             <div>
@@ -1139,26 +1181,50 @@ function ExpensesStep({ register }: any) {
               <label className="block text-chalk-white font-casual mb-2">
                 Entertainment
               </label>
-              <input
-                type="number"
-                {...register('expenses.entertainment', { min: 0 })}
-                className="chalk-input w-full"
-                placeholder="0"
-                step="50"
-              />
+              <div className="flex items-center gap-3">
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="25"
+                  defaultValue="300"
+                  {...register('expenses.entertainment')}
+                  className="flex-1 h-3 bg-board-light rounded-lg appearance-none cursor-pointer accent-chalk-pink"
+                />
+                <div className="w-24 text-right">
+                  <span className="text-xl font-chalk text-chalk-yellow">
+                    ${watch('expenses.entertainment') || 300}
+                  </span>
+                </div>
+              </div>
+              <p className="text-chalk-blue text-xs mt-1 font-casual">
+                Typical: $100-$500/month
+              </p>
             </div>
 
             <div>
               <label className="block text-chalk-white font-casual mb-2">
                 Shopping
               </label>
-              <input
-                type="number"
-                {...register('expenses.shopping', { min: 0 })}
-                className="chalk-input w-full"
-                placeholder="0"
-                step="50"
-              />
+              <div className="flex items-center gap-3">
+                <input
+                  type="range"
+                  min="0"
+                  max="1000"
+                  step="25"
+                  defaultValue="200"
+                  {...register('expenses.shopping')}
+                  className="flex-1 h-3 bg-board-light rounded-lg appearance-none cursor-pointer accent-chalk-pink"
+                />
+                <div className="w-24 text-right">
+                  <span className="text-xl font-chalk text-chalk-yellow">
+                    ${watch('expenses.shopping') || 200}
+                  </span>
+                </div>
+              </div>
+              <p className="text-chalk-blue text-xs mt-1 font-casual">
+                Typical: $100-$400/month
+              </p>
             </div>
 
             <div>
