@@ -31,12 +31,18 @@ function App() {
           {/* Main Content */}
           <div className="relative z-10">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/calculators/cpf" element={<CPFCalculator />} />
-
-              {/* Main routes */}
+              {/* Timeline is the main app - default landing page */}
+              <Route path="/" element={<TimelinePage />} />
               <Route path="/timeline" element={<TimelinePage />} />
+
+              {/* Dashboard for insights */}
+              <Route path="/dashboard" element={<Dashboard />} />
+
+              {/* Profile setup */}
+              <Route path="/profile" element={<Profile />} />
+
+              {/* Legacy/unused routes */}
+              <Route path="/calculators/cpf" element={<CPFCalculator />} />
               <Route path="/housing" element={<ComingSoon title="HDB/Property Planner" />} />
               <Route path="/vehicle" element={<ComingSoon title="Car & COE Calculator" />} />
               <Route path="/investments" element={<ComingSoon title="Investment Tracker" />} />

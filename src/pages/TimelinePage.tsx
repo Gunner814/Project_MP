@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Settings, Save, RefreshCw, Share2, Upload } from 'lucide-react';
+import { Calendar, Settings, Save, RefreshCw, Share2, Upload, Sparkles, FileUp } from 'lucide-react';
 import ModuleLibrary from '@/components/Timeline/ModuleLibrary';
 import InteractiveTimeline from '@/components/Timeline/InteractiveTimeline';
 import IncomeControls from '@/components/Timeline/IncomeControls';
@@ -33,6 +34,10 @@ export default function TimelinePage() {
   const [isComparisonViewOpen, setIsComparisonViewOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
+
+  // Check if profile exists
+  const userProfile = localStorage.getItem('userProfile');
+  const hasProfile = userProfile && Object.keys(JSON.parse(userProfile)).length > 0;
 
   useEffect(() => {
     // Load user profile from localStorage
@@ -112,6 +117,72 @@ export default function TimelinePage() {
       setIsDraggingOver(false);
     }
   };
+
+  // Show "Get Started" screen if no profile
+  if (!hasProfile) {
+    return (
+      <div className="min-h-screen bg-bg-primary flex items-center justify-center p-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-2xl w-full text-center"
+        >
+          <Sparkles className="w-20 h-20 text-accent-primary mx-auto mb-6" />
+          <h1 className="text-5xl font-chalk text-chalk-yellow mb-4">
+            Welcome to Life Planner
+          </h1>
+          <p className="text-xl font-casual text-chalk-white mb-8">
+            Your Singapore life planning journey starts here
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {/* Create New Profile */}
+            <Link
+              to="/profile"
+              className="chalk-card hover:bg-board-light transition-all group p-8"
+            >
+              <Sparkles className="w-12 h-12 text-chalk-green mx-auto mb-4" />
+              <h3 className="text-2xl font-chalk text-chalk-yellow mb-2">
+                Start Fresh
+              </h3>
+              <p className="font-casual text-chalk-white mb-4">
+                Create your financial profile and plan your future
+              </p>
+              <span className="font-chalk text-chalk-blue">
+                Create Profile →
+              </span>
+            </Link>
+
+            {/* Import Existing Profile */}
+            <div
+              className="chalk-card hover:bg-board-light transition-all group p-8 cursor-pointer"
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <FileUp className="w-12 h-12 text-chalk-blue mx-auto mb-4" />
+              <h3 className="text-2xl font-chalk text-chalk-yellow mb-2">
+                Import Profile
+              </h3>
+              <p className="font-casual text-chalk-white mb-4">
+                Drag & drop your saved life plan JSON file here
+              </p>
+              <span className="font-chalk text-chalk-blue">
+                Drop File Here →
+              </span>
+            </div>
+          </div>
+
+          <div className="p-4 bg-board-dark rounded-lg border-2 border-chalk-blue">
+            <p className="font-casual text-chalk-white text-sm">
+              💡 <strong>New to Singapore?</strong> No worries! Our wizard will guide you through
+              setting up your CPF, income, and life goals step by step.
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div

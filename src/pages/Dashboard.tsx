@@ -1,10 +1,5 @@
 import { Link } from 'react-router-dom';
 import {
-  Calculator,
-  Home,
-  Car,
-  TrendingUp,
-  Heart,
   DollarSign,
   Clock,
   Target,
@@ -325,137 +320,27 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Main Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Life Timeline - NEW INTERACTIVE FEATURE */}
-          <Link to="/timeline" className="chalk-card hover:bg-board-light transition-all group ring-2 ring-chalk-yellow relative">
-            <div className="absolute -top-2 -right-2 bg-chalk-red text-board px-2 py-1 rounded text-xs font-chalk z-10">
-              NEW!
-            </div>
-            <div className="flex items-start space-x-4">
-              <div className="p-3 bg-chalk-yellow rounded-lg">
-                <Clock className="w-8 h-8 text-board" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-chalk text-chalk-yellow mb-2">
-                  Interactive Timeline
-                </h3>
-                <p className="font-casual text-chalk-white mb-3">
-                  Drag & drop life events, adjust income, see instant projections!
-                </p>
-                <span className="font-casual text-chalk-blue flex items-center">
-                  Start Planning
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          {/* CPF Calculator */}
-          <Link to="/calculators/cpf" className="chalk-card hover:bg-board-light transition-all group">
-            <div className="flex items-start space-x-4">
-              <div className="p-3 bg-chalk-green rounded-lg">
-                <Calculator className="w-8 h-8 text-board" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-chalk text-chalk-green mb-2">
-                  CPF Calculator
-                </h3>
-                <p className="font-casual text-chalk-white mb-3">
-                  Optimize your CPF for retirement and housing
-                </p>
-                <span className="font-casual text-chalk-blue flex items-center">
-                  Calculate Now
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          {/* HDB Planner */}
-          <Link to="/housing" className="chalk-card hover:bg-board-light transition-all group">
-            <div className="flex items-start space-x-4">
-              <div className="p-3 bg-chalk-pink rounded-lg">
-                <Home className="w-8 h-8 text-board" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-chalk text-chalk-pink mb-2">
-                  HDB/Property
-                </h3>
-                <p className="font-casual text-chalk-white mb-3">
-                  BTO timeline, grants, and affordability check
-                </p>
-                <span className="font-casual text-chalk-blue flex items-center">
-                  Plan Housing
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          {/* Vehicle Planning */}
-          <Link to="/vehicle" className="chalk-card hover:bg-board-light transition-all group">
-            <div className="flex items-start space-x-4">
-              <div className="p-3 bg-chalk-blue rounded-lg">
-                <Car className="w-8 h-8 text-board" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-chalk text-chalk-blue mb-2">
-                  Car & COE
-                </h3>
-                <p className="font-casual text-chalk-white mb-3">
-                  Calculate true cost of car ownership with COE
-                </p>
-                <span className="font-casual text-chalk-blue flex items-center">
-                  Check Costs
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          {/* Investment Tracker */}
-          <Link to="/investments" className="chalk-card hover:bg-board-light transition-all group">
-            <div className="flex items-start space-x-4">
-              <div className="p-3 bg-chalk-white rounded-lg">
-                <TrendingUp className="w-8 h-8 text-board" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-chalk text-chalk-white mb-2">
-                  Investments
-                </h3>
-                <p className="font-casual text-chalk-white mb-3">
-                  STI ETF, SSB, and portfolio planning
-                </p>
-                <span className="font-casual text-chalk-blue flex items-center">
-                  Manage Portfolio
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Link>
-
-          {/* Family Planning */}
-          <Link to="/family" className="chalk-card hover:bg-board-light transition-all group">
-            <div className="flex items-start space-x-4">
-              <div className="p-3 bg-chalk-red rounded-lg">
-                <Heart className="w-8 h-8 text-board" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-chalk text-chalk-red mb-2">
-                  Family & Education
-                </h3>
-                <p className="font-casual text-chalk-white mb-3">
-                  Children costs, education savings plan
-                </p>
-                <span className="font-casual text-chalk-blue flex items-center">
-                  Plan Family
-                  <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </Link>
-        </div>
+        {/* Call to Action - Go to Timeline */}
+        {hasProfile && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="text-center"
+          >
+            <Link
+              to="/timeline"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-chalk-yellow text-board font-chalk text-2xl rounded-lg hover:bg-opacity-90 transition-all hover:scale-105 shadow-2xl"
+            >
+              <Clock className="w-8 h-8" />
+              Open Interactive Timeline
+              <ChevronRight className="w-8 h-8" />
+            </Link>
+            <p className="mt-4 text-chalk-white font-casual">
+              Drag & drop life events, adjust income, see your financial future unfold
+            </p>
+          </motion.div>
+        )}
 
         {/* Tips Section */}
         <div className="mt-12 p-6 border-2 border-chalk-yellow border-dashed rounded-lg">
