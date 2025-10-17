@@ -27,7 +27,7 @@ export default function Dashboard() {
   const retirementProjection = projections.find(p => p.age === retirementAge);
   const currentProjection = retirementProjection?.netWorth || 0;
   const percentageToGoal = requiredNestEgg > 0 ? (currentProjection / requiredNestEgg) * 100 : 0;
-  const yearsToRetirement = retirementAge - financial.currentAge;
+  const yearsToRetirement = retirementAge - (financial?.currentAge || 30);
 
   const getRetirementStatus = () => {
     if (percentageToGoal >= 100) return { color: 'green', icon: CheckCircle, message: 'On Track!', detail: 'You\'re projected to meet your retirement goal' };
@@ -58,7 +58,7 @@ export default function Dashboard() {
         message: `Cash depleted - negative balance of $${Math.abs(p.cashSavings).toLocaleString()}`,
         severity: 'high'
       });
-    } else if (p.cashSavings < financial.monthlyIncome * 3 && p.age > financial.currentAge) {
+    } else if (p.cashSavings < (financial?.monthlyIncome || 0) * 3 && p.age > (financial?.currentAge || 30)) {
       warnings.push({
         age: p.age,
         message: `Low cash reserves - only $${p.cashSavings.toLocaleString()} remaining`,
@@ -69,7 +69,7 @@ export default function Dashboard() {
 
   // Check for high expense years
   projections.forEach((p, index) => {
-    if (index > 0 && p.annualExpenses > financial.monthlyIncome * 24) {
+    if (index > 0 && p.annualExpenses > (financial?.monthlyIncome || 0) * 24) {
       warnings.push({
         age: p.age,
         message: `High expenses year - $${p.annualExpenses.toLocaleString()} (2x annual income)`,
@@ -245,7 +245,7 @@ export default function Dashboard() {
                     <span className="font-casual text-chalk-white">Current Net Worth</span>
                   </div>
                   <span className="text-lg font-chalk text-chalk-yellow">
-                    {formatCurrency(financial.netWorth)}
+                    {formatCurrency(financial?.netWorth || 0)}
                   </span>
                 </div>
 
