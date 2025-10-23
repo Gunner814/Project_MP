@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, DollarSign, Calculator, Info } from 'lucide-react';
 import { TimelineModule } from '@/stores/timelineStore';
 import useTimelineStore from '@/stores/timelineStore';
+import { safeToFixed } from '@/utils/formatters';
 
 interface ModuleCustomizationDialogProps {
   module: TimelineModule;
@@ -473,7 +474,7 @@ export default function ModuleCustomizationDialog({
                           />
                           <span className="font-chalk text-chalk-green text-xl">
                             {((customModule.salaryChange?.amount || 1.20) - 1) * 100 > 0 ? '+' : ''}
-                            {(((customModule.salaryChange?.amount || 1.20) - 1) * 100).toFixed(0)}%
+                            {safeToFixed(((customModule.salaryChange?.amount || 1.20) - 1) * 100, 0)}%
                           </span>
                         </div>
                         <p className="text-xs font-casual text-chalk-white opacity-70 mt-1">

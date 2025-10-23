@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Info, TrendingUp, PiggyBank } from 'lucide-react';
 import { calculateCPFContribution } from '@constants/singapore';
+import { safeCurrency } from '@/utils/formatters';
 
 export default function CPFCalculator() {
   const [age, setAge] = useState(30);
@@ -196,20 +197,20 @@ export default function CPFCalculator() {
                     <div>
                       <p className="text-sm font-casual text-chalk-white">Employee</p>
                       <p className="text-2xl font-chalk text-chalk-yellow">
-                        ${results.monthlyContribution.employee.toFixed(0)}
+                        ${safeCurrency(results.monthlyContribution?.employee, 0)}
                       </p>
                     </div>
                     <div>
                       <p className="text-sm font-casual text-chalk-white">Employer</p>
                       <p className="text-2xl font-chalk text-chalk-yellow">
-                        ${results.monthlyContribution.employer.toFixed(0)}
+                        ${safeCurrency(results.monthlyContribution?.employer, 0)}
                       </p>
                     </div>
                   </div>
                   <div className="mt-4 pt-4 border-t border-chalk-white">
                     <p className="text-sm font-casual text-chalk-white">Total Monthly</p>
                     <p className="text-3xl font-chalk text-chalk-green">
-                      ${results.monthlyContribution.total.toFixed(0)}
+                      ${safeCurrency(results.monthlyContribution?.total, 0)}
                     </p>
                   </div>
                 </div>

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { LineChart, Line, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { TrendingUp, DollarSign, PiggyBank } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';
+import { safeToFixed } from '@/utils/formatters';
 
 export default function FinancialProjectionGraph() {
   const { projections, financial } = useTimelineStore();
@@ -58,7 +59,7 @@ export default function FinancialProjectionGraph() {
 
   const formatNetWorth = (value: number) => {
     if (value >= 1000) {
-      const millions = (value / 1000).toFixed(1);
+      const millions = safeToFixed(value / 1000, 1);
       return `$${parseFloat(millions).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`;
     }
     return `$${value.toLocaleString('en-US')}k`;

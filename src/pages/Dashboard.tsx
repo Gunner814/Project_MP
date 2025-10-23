@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import useTimelineStore from '@/stores/timelineStore';
+import { safeToFixed, safePercentage } from '@/utils/formatters';
 
 export default function Dashboard() {
   const { financial, retirementGoal, projections } = useTimelineStore();
@@ -167,7 +168,7 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
                     <div className="text-sm font-casual text-chalk-white opacity-70">Progress to Goal</div>
-                    <div className="text-2xl font-chalk text-chalk-yellow">{Math.min(percentageToGoal, 100).toFixed(0)}%</div>
+                    <div className="text-2xl font-chalk text-chalk-yellow">{safeToFixed(Math.min(percentageToGoal, 100), 0)}%</div>
                   </div>
                   <div>
                     <div className="text-sm font-casual text-chalk-white opacity-70">Required Nest Egg</div>
@@ -210,7 +211,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`text-lg font-chalk ${isSavingEnough ? 'text-chalk-green' : 'text-chalk-red'}`}>
-                      {savingsRate.toFixed(1)}%
+                      {safePercentage(savingsRate, 1)}%
                     </span>
                     {isSavingEnough ? (
                       <CheckCircle className="w-5 h-5 text-chalk-green" />
@@ -228,7 +229,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`text-lg font-chalk ${hasEmergencyFund ? 'text-chalk-green' : 'text-chalk-yellow'}`}>
-                      {emergencyFundMonths.toFixed(1)} months
+                      {safeToFixed(emergencyFundMonths, 1)} months
                     </span>
                     {hasEmergencyFund ? (
                       <CheckCircle className="w-5 h-5 text-chalk-green" />

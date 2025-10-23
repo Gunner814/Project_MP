@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Target, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';
+import { safeToFixed } from '@/utils/formatters';
 
 export default function RetirementGoal() {
   const { retirementGoal, setRetirementGoal, projections, financial } = useTimelineStore();
@@ -213,7 +214,7 @@ export default function RetirementGoal() {
               <div className="flex justify-between items-center text-xs">
                 <span className="text-text-muted">Progress:</span>
                 <span className={`font-bold ${getStatusColor()}`}>
-                  {Math.min(percentageToGoal, 100).toFixed(0)}%
+                  {safeToFixed(Math.min(percentageToGoal, 100), 0)}%
                 </span>
               </div>
               <div className="w-full bg-bg-hover rounded-full h-3 overflow-hidden border border-border-primary">

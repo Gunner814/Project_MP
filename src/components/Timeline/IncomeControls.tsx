@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { PiggyBank, Calculator, Briefcase, TrendingUp, AlertCircle } from 'lucide-react';
 import useTimelineStore from '@/stores/timelineStore';
+import { safePercentage } from '@/utils/formatters';
 
 export default function IncomeControls() {
   const {
@@ -180,7 +181,7 @@ export default function IncomeControls() {
                 <div className="flex items-center gap-1 text-money-positive text-sm">
                   <span className="text-lg">✅</span>
                   <span className="font-semibold">
-                    {savingsRate.toFixed(1)}% savings rate
+                    {safePercentage(savingsRate, 1)}% savings rate
                   </span>
                   <span className="text-text-muted">(Above 20% target)</span>
                 </div>
@@ -188,7 +189,7 @@ export default function IncomeControls() {
                 <div className="flex items-center gap-1 text-accent-warning text-sm">
                   <AlertCircle className="w-4 h-4" />
                   <span className="font-semibold">
-                    {savingsRate.toFixed(1)}% savings rate
+                    {safePercentage(savingsRate, 1)}% savings rate
                   </span>
                   <span className="text-text-muted">(Below 20% target)</span>
                 </div>

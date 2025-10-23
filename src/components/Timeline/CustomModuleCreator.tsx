@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Sparkles, DollarSign, Plus, Minus, Calendar, Clock, Palette } from 'lucide-react';
 import { CostFrequency } from '@/stores/timelineStore';
 import useTimelineStore from '@/stores/timelineStore';
+import { safeToFixed } from '@/utils/formatters';
 
 interface CustomModuleCreatorProps {
   isOpen: boolean;
@@ -391,7 +392,7 @@ export default function CustomModuleCreator({ isOpen, onClose }: CustomModuleCre
                         </p>
                       )}
                       <div className={`text-sm font-casual mt-1 ${isExpense ? 'text-chalk-red' : 'text-chalk-green'}`}>
-                        {isExpense ? '-' : '+'} ${amount.toFixed(2)}/{frequency === 'one-time' ? 'once' : frequency}
+                        {isExpense ? '-' : '+'} ${safeToFixed(amount, 2)}/{frequency === 'one-time' ? 'once' : frequency}
                       </div>
                     </div>
                   </div>

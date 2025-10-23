@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import useTimelineStore from '@/stores/timelineStore';
+import { safeThousands } from '@/utils/formatters';
 import DraggableModule from './DraggableModule';
 import ModuleCustomizationDialog from './ModuleCustomizationDialog';
 import { TimelineModule } from '@/stores/timelineStore';
@@ -258,7 +259,7 @@ export default function InteractiveTimeline() {
                         <span
                           className={projection.netWorth >= 0 ? 'text-money-positive font-semibold' : 'text-money-negative font-semibold'}
                         >
-                          ${(projection.netWorth / 1000).toFixed(0)}k
+                          ${safeThousands(projection.netWorth, 0)}k
                         </span>
                       </div>
 
@@ -268,7 +269,7 @@ export default function InteractiveTimeline() {
                           <span
                             className={projection.cashFlow >= 0 ? 'text-money-positive font-semibold' : 'text-money-negative font-semibold'}
                           >
-                            {projection.cashFlow >= 0 ? '+' : ''}{(projection.cashFlow / 1000).toFixed(1)}k/mo
+                            {projection.cashFlow >= 0 ? '+' : ''}${safeThousands(projection.cashFlow, 1)}k/mo
                           </span>
                         </div>
                       )}
@@ -277,7 +278,7 @@ export default function InteractiveTimeline() {
                         <div className="flex items-center justify-end gap-1">
                           <span className="text-text-muted">CPF:</span>
                           <span className="text-accent-info font-semibold">
-                            ${(projection.cpfTotal / 1000).toFixed(0)}k
+                            ${safeThousands(projection.cpfTotal, 0)}k
                           </span>
                         </div>
                       )}
